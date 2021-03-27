@@ -9,7 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Whitelist;
+import org.springframework.util.StringUtils;
 
 /**
  * Search login
@@ -22,7 +24,7 @@ public class SearchController {
     java.lang.Object message = new Object();
     try {
       ExpressionParser parser = new SpelExpressionParser();
-      Expression exp = parser.parseExpression(foo);
+      Expression exp = parser.parseExpression(Jsoup.clean(foo, Whitelist.basic()));
       message = (Object) exp.getValue();
     } catch (Exception ex) {
       System.out.println(ex.getMessage());
